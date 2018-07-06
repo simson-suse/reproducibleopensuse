@@ -18,6 +18,7 @@ origrpm=$(ls binaries/*.rpm | head -1)
 export DISTURL=$(rpm -qp --qf "%{DISTURL}" $origrpm)
 export release=$(rpm -qp --qf "%{release}" $origrpm)
 export debuginfo=--debuginfo
+perl -ne 'm{^\s*<debuginfo>0</debuginfo>$} and exit 1' .osc/_buildinfo-$repo-$arch.xml || debuginfo=--disable-debuginfo
 export vmtype="--vm-type=kvm -j4"
 export OSC_BUILD_ROOT=/var/tmp/build-root.${slot}/
 rebuild
