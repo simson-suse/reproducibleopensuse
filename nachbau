@@ -15,6 +15,7 @@ for bin in binaries/*rpm ; do rpm --delsign $bin ; done
 p=$(basename $(pwd))
 origrpm=$(ls binaries/*.rpm | head -1)
 [ -n "$origrpm" ] || exit 17
+export buildhost=$(rpm -qp --qf "%{BUILDHOST}" $origrpm)
 export DISTURL=$(rpm -qp --qf "%{DISTURL}" $origrpm)
 export release=$(rpm -qp --qf "%{release}" $origrpm)
 export debuginfo=--debuginfo
